@@ -28,7 +28,7 @@ class BookSpider(scrapy.Spider):
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
 
-    def parse_book(self, response: Response) -> dict:
+    def parse_book(self, response: Response) -> Generator[dict, None, None]:
         yield {
             "title": response.css("h1::text").get(),
             "price": float(response.css("p.price_color::text").get().replace("£", "")),
